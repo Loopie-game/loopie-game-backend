@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    triggers {
+        pollSCM "*/5 * * * *"
+    }
+
+    stages {
+
+        stage ("Build Backend") {
+            steps {
+                sh "dotnet build ."
+            }
+        }
+
+        stage ("Reset Containers") {
+            steps {
+                script {
+                    try {
+                        sh "docker compose -f docker-compose.dev.yml --env-file config/Dev.env down"
+                    }
+                    finally {}
+                }
+            }
+        }
+
+        stage ("Deploy Backend") {
+            steps {
+                sh "docker compose -f docker-compose.dev.yml --env-file config/Dev.env up -d --build"
+            }
+        }
+    }
+}
