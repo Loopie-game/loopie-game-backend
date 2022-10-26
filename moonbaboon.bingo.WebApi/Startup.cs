@@ -120,6 +120,8 @@ namespace moonbaboon.bingo.WebApi
                         .WithOrigins("http://localhost:9090")
                         .WithOrigins("http://185.51.76.157:9070")
                         .WithOrigins("http://185.51.76.157:9090")
+                        .WithOrigins("http://loopiegame.com:9090")
+                        .WithOrigins("http://loopiegame.com:9070")
                         .AllowCredentials();
                 });
                 options.AddPolicy(PolicyProd, policy =>
